@@ -7,15 +7,16 @@ var Purchase = {
     this.outputTotal = this.price*this.quantity;
   }
 };
-// var testPurchase = Object.create(Purchase);
-// testPurchase.description;
-// testPurchase.price;
-// testPurchase.quantity;
-// testPurchase.outputTotal;
-// testPurchase.totalCost;
+var Category = {
+  name: "",
+  purchases: []
+}
 
 $(document).ready(function() {
-  $("form").submit(function(event) {
+
+  var currentCategory;
+
+  $("form#purchase-form").submit(function(event) {
     event.preventDefault();
     var description = $("#description").val();
     var pricePI = $("#pricePI").val();
@@ -26,6 +27,7 @@ $(document).ready(function() {
     newPurchase.price = pricePI;
     newPurchase.quantity = quantity;
     newPurchase.totalCost();
+
     $(".outputTable table tbody").append(
               "<tr>" +
                 "<td>" + newPurchase.description + "</td>" +
@@ -34,7 +36,19 @@ $(document).ready(function() {
                 "<td>" + newPurchase.outputTotal + "</td>" +
               "</tr>" );
 
-    alert(newPurchase.outputTotal);
+    // alert(newPurchase.outputTotal);
+
+  });
+  $("form#category-form").submit(function(event) {
+    event.preventDefault();
+    var categoryName = $("#newCategory").val();
+    var newCategory = Object.create(Category);
+    newCategory.name = categoryName;
+    currentCategory = newCategory;
+    $(".outputTable table").empty();
+    $("#categories").show().append("<li><span>"+ categoryName +"</li></span>");
+
+
 
   });
 
